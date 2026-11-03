@@ -1,130 +1,227 @@
-# ⌨️ Touch Typing
+# TypeFlow — Touch Typing Trainer
 
-> An interactive touch typing trainer to build speed, accuracy, and muscle memory through guided lessons and practice.
+A full-stack typing trainer that teaches touch typing technique, tracks speed and accuracy, and stores every practice session in MongoDB.
 
-![Status](https://img.shields.io/badge/status-in%20development-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+- **Frontend:** React 19 + Vite + React Router + Axios
+- **Backend:** Node.js + Express + JWT authentication
+- **Database:** MongoDB + Mongoose
+- **Features:** guided lessons, live WPM/accuracy, on-screen keyboard, session history, statistics chart, streaks, achievements and a leaderboard
 
 ---
 
-## 📖 About
-
-**Touch Typing** helps you learn to type quickly and accurately without looking at the keyboard. Start with the home row, progress through every key, and track your improvement over time.
-
-Whether you're a complete beginner or just want to push past your current WPM, this project gives you a simple, distraction-free way to practice.
-
-## ✨ Features
-
-- 🎯 **Guided lessons**: progress from home row to full keyboard
-- ⚡ **Real-time feedback**: instant highlighting of correct and incorrect keystrokes
-- 📊 **Speed & accuracy tracking**: see your WPM and accuracy after every session
-- ⏱️ **Timed practice**: 1, 2, and 5-minute typing tests
-- 🧠 **Muscle memory drills**: repeat problem keys and tricky letter combinations
-- 🌙 **Clean, minimal interface**: no distractions, just typing
-
-## 🖼️ Preview
-
-<!-- Add a screenshot or GIF of your app here -->
-<!-- ![Touch Typing Screenshot](./assets/screenshot.png) -->
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- A modern web browser (Chrome, Firefox, Edge, or Safari)
-- *(Optional)* [Node.js](https://nodejs.org/) if you want to run a local dev server
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/IMPACIFIQUE/Touch_Typing.git
-   ```
-
-2. **Move into the project folder**
-
-   ```bash
-   cd Touch_Typing
-   ```
-
-3. **Run the project**
-
-   Open `index.html` in your browser, or start a local server:
-
-   ```bash
-   npx serve .
-   ```
-
-## 🎮 How to Use
-
-1. Choose a lesson or start a free typing test.
-2. Place your fingers on the **home row** (`A S D F` and `J K L ;`).
-3. Type the text shown on screen without looking at your keyboard.
-4. Review your **WPM** and **accuracy** at the end of each session.
-5. Repeat daily. Consistency matters more than long sessions.
-
-## 🖐️ Touch Typing Basics
-
-| Finger         | Left Hand | Right Hand |
-| -------------- | --------- | ---------- |
-| Pinky          | Q A Z     | P ; /      |
-| Ring           | W S X     | O L .      |
-| Middle         | E D C     | I K ,      |
-| Index          | R F V T G B | U J M Y H N |
-| Thumbs         | Space     | Space      |
-
-**Tips for faster progress:**
-
-- Keep your wrists relaxed and straight.
-- Prioritize **accuracy first**, speed will follow.
-- Practice 15 to 20 minutes every day.
-- Never look down at the keys. Trust your fingers.
-
-## 🗂️ Project Structure
+## Project structure
 
 ```
-Touch_Typing/
-├── index.html        # Main page
-├── css/              # Stylesheets
-├── js/               # Application logic
-├── assets/           # Images and icons
+Touch_typing/
+├── client/                     # React frontend (Vite)
+│   ├── public/
+│   ├── src/
+│   │   ├── api/                # Axios client + endpoint modules
+│   │   ├── components/
+│   │   │   ├── auth/           # ProtectedRoute
+│   │   │   ├── layout/         # Navbar, Footer, Layout
+│   │   │   ├── lessons/        # LessonCard
+│   │   │   ├── typing/         # TypingArea, Keyboard, LiveStats, ResultCard
+│   │   │   └── ui/             # Spinner
+│   │   ├── context/            # Auth context/provider
+│   │   ├── hooks/              # useAuth, useTypingEngine
+│   │   ├── pages/              # Home, Lessons, Practice, Dashboard, ...
+│   │   ├── styles/             # Global stylesheet / design tokens
+│   │   ├── utils/              # Formatters, token storage, practice texts
+│   │   ├── App.jsx             # Routes
+│   │   └── main.jsx            # Entry point
+│   ├── index.html
+│   ├── vite.config.js          # Dev proxy: /api -> localhost:5000
+│   └── package.json
+│
+├── server/                     # Express API
+│   ├── src/
+│   │   ├── config/             # env + MongoDB connection
+│   │   ├── models/             # User, Lesson, PracticeSession, Achievement
+│   │   ├── controllers/        # auth, lesson, session, stats, leaderboard
+│   │   ├── routes/             # /api/v1 routes
+│   │   ├── middleware/         # auth, validation, errors, rate limit
+│   │   ├── validators/         # request body validation
+│   │   ├── utils/              # ApiError, tokens, typing metrics, achievements
+│   │   ├── seed/               # Lessons + achievements seed data
+│   │   ├── app.js              # Express app
+│   │   └── server.js           # Startup + graceful shutdown
+│   ├── .env.example
+│   └── package.json
+│
+├── database/                   # MongoDB setup and schema documentation
+│   └── README.md
+│
+├── package.json                # Root scripts (run both apps at once)
 └── README.md
 ```
 
-> Update this section to match your actual folder layout.
+---
 
-## 🛣️ Roadmap
+## Quick start
 
-- [x] Basic typing test
-- [x] WPM and accuracy calculation
-- [ ] Structured lesson plan (beginner to advanced)
-- [ ] Progress history and charts
-- [ ] Custom text and code-typing mode
-- [ ] Multiple keyboard layouts (QWERTY, Dvorak, Colemak)
-- [ ] Dark/light theme toggle
+### Prerequisites
 
-## 🤝 Contributing
+- Node.js 20+ (tested on Node 22)
+- MongoDB 6+ running locally, or a MongoDB Atlas connection string
 
-Contributions, issues, and feature requests are welcome!
+### 1. Install dependencies
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m "Add amazing feature"`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+```bash
+npm run install:all
+```
 
-## 📄 License
+Or install each package separately:
 
-Distributed under the MIT License. See `LICENSE` for more information.
+```bash
+npm install
+npm --prefix server install
+npm --prefix client install
+```
 
-## 👤 Author
+### 2. Configure the environment
 
-**IMPACIFIQUE**
+`server/.env` is created for local development with these defaults:
 
-- GitHub: [@IMPACIFIQUE](https://github.com/IMPACIFIQUE)
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/typeflow
+JWT_SECRET=dev-only-secret-change-me-before-deploying
+JWT_EXPIRES_IN=7d
+BCRYPT_ROUNDS=12
+CLIENT_URL=http://localhost:5173
+```
+
+For MongoDB Atlas, replace `MONGO_URI` with your connection string. Always change `JWT_SECRET` before deploying.
+
+The frontend talks to `/api` during development, and Vite proxies that to `http://localhost:5000`. To point the frontend at a different API, create `client/.env`:
+
+```env
+VITE_API_URL=https://your-api.example.com/api/v1
+```
+
+### 3. Seed the database
+
+```bash
+npm run seed
+```
+
+This upserts the 12 lessons and 12 achievements into the `typeflow` database. It is safe to run multiple times.
+
+### 4. Run the app
+
+```bash
+npm run dev
+```
+
+- Frontend: http://localhost:5173
+- API: http://localhost:5000
+- Health check: http://localhost:5000/health
+
+You can also run the two apps in separate terminals:
+
+```bash
+npm run dev:server
+npm run dev:client
+```
 
 ---
 
-⭐ If this project helps you type faster, consider giving it a star!
+## Using the app
+
+1. Open http://localhost:5173.
+2. Try **Practice** without an account (results are not saved).
+3. Create an account to save sessions, build a streak and unlock achievements.
+4. Work through **Lessons** in order: home row → top row → bottom row → numbers → punctuation → speed → code.
+5. Check **Dashboard** for best WPM, accuracy, weekly chart, recent sessions and achievements.
+6. Check **Leaderboard** for all-time and weekly rankings.
+
+---
+
+## API overview
+
+Base URL: `http://localhost:5000/api/v1`
+
+| Method | Endpoint | Auth | Description |
+| --- | --- | --- | --- |
+| POST | `/auth/register` | — | Create an account, returns JWT |
+| POST | `/auth/login` | — | Sign in, returns JWT |
+| POST | `/auth/logout` | Bearer | Stateless sign out |
+| GET | `/auth/me` | Bearer | Current user profile |
+| PATCH | `/auth/me` | Bearer | Update name, email, settings or password |
+| GET | `/lessons` | — | List lessons (`?level=&category=&search=&page=&limit=`) |
+| GET | `/lessons/:slug` | — | Get a lesson by slug |
+| POST | `/lessons` | Admin | Create a lesson |
+| PATCH | `/lessons/:id` | Admin | Update a lesson |
+| DELETE | `/lessons/:id` | Admin | Delete a lesson |
+| POST | `/sessions` | Bearer | Record a practice session |
+| GET | `/sessions` | Bearer | List your sessions |
+| GET | `/sessions/:id` | Bearer | Get one of your sessions |
+| DELETE | `/sessions/:id` | Bearer | Delete one of your sessions |
+| GET | `/stats/me` | Bearer | Summary, 7-day chart, recent sessions, achievements |
+| GET | `/leaderboard` | — | Rankings (`?period=all|week&limit=`) |
+| GET | `/health` | — | Service health |
+
+Authenticated requests use:
+
+```
+Authorization: Bearer <token>
+```
+
+### Recording a session
+
+The client sends the raw counts and elapsed time; the server recalculates WPM and accuracy so scores are not simply trusted from the browser:
+
+```json
+{
+  "lessonSlug": "home-row-basics",
+  "mode": "lesson",
+  "content": "asdf jkl; ...",
+  "typedChars": 93,
+  "correctChars": 91,
+  "elapsedMs": 60000
+}
+```
+
+The response includes the stored session, updated user statistics and any newly unlocked achievements.
+
+---
+
+## Database
+
+See [`database/README.md`](database/README.md) for the MongoDB setup, collection schemas, relationships and indexes.
+
+Database name: **typeflow**
+
+Collections:
+
+- `users` — accounts, aggregate statistics, unlocked achievements
+- `lessons` — lesson content and goals
+- `practicesessions` — every recorded practice result
+- `achievements` — achievement catalog
+
+---
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run install:all` | Install root, server and client dependencies |
+| `npm run dev` | Run API + frontend together |
+| `npm run dev:server` | Run the API with nodemon |
+| `npm run dev:client` | Run the Vite dev server |
+| `npm run seed` | Seed lessons and achievements |
+| `npm run build` | Build the frontend for production |
+| `npm run start` | Start the API in production mode |
+| `npm run lint` | Lint the frontend |
+
+---
+
+## Production notes
+
+- Set `NODE_ENV=production`, a strong `JWT_SECRET` and your real `MONGO_URI`.
+- Set `CLIENT_URL` to the deployed frontend origin (CORS allow-list).
+- Build the frontend with `npm run build` and serve `client/dist` from a static host or reverse proxy.
+- The API is stateless (Bearer JWT), so it can be scaled horizontally.
+- Add an admin user manually in MongoDB (`role: "admin"`) if you want to manage lessons through the API.
